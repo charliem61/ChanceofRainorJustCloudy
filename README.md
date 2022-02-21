@@ -4,7 +4,7 @@ A display of pnw based weather.
 
 Repo Link: https://github.com/charliem61/ChanceofRainorJustCloudy
 
-Live Url: https://github.com/charliem61/
+Live Url: 
 
 
 Goal/Motivation:
