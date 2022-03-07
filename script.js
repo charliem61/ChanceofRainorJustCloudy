@@ -6,9 +6,14 @@ var currentForecast = $("currentForcast");
 var fiveDay = $("fiveDay");
 
 function clickEvent() {
-  var userInput = $(this).siblings("input").val();
+  if($(this).attr("id")==="userInputBtn"){
+    var userInput = $(this).siblings("input").val();
+    save(userInput)
+    $(this).siblings("input").val("");
+  }else{
+    var userInput=$(this).text()
+  }
   geoSearch(userInput)
-  save(userInput)
 }
 function geoSearch(city) {
   var geoCoding = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${weatherApiKey}`;
@@ -44,7 +49,21 @@ function save(userInput){
           localStorage.setItem("searchHistory",JSON.stringify(searchHistory))
           pastSearchHistory()
 }
+function renderCurrentForcast(){
+  var card=`<div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>`
+}
 
-pastSearch.on("click","button")
+pastSearch.on("click","button",clickEvent)
 $("#userInputBtn").on("click", clickEvent);
 pastSearchHistory()
+
+// Render current forcast using card template above on line fifty-sixty
+// use same card template for 5day
+
