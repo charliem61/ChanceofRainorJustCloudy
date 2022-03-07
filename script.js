@@ -1,6 +1,9 @@
 var weatherApiKey = "5eab078dd93d8edbe65b584312d7580a";
 var searchHistory = JSON.parse(localStorage.getItem("searchHistory"))||[]
 var userSearchEl = $("#userInput");
+var pastSearch = $("#pastSearch");
+var currentForecast = $("currentForcast");
+var fiveDay = $("fiveDay");
 
 function clickEvent() {
   var userInput = $(this).siblings("input").val();
@@ -28,9 +31,20 @@ function weatherSearch(lat,lon){
                   console.log(data)
           })
 }
+function pastSearchHistory(){
+  pastSearch.empty()
+  searchHistory.forEach(function(text){
+    var btnEl=$("<button>")
+    btnEl.text(text)
+    pastSearch.append(btnEl)
+  })
+}
 function save(userInput){
           searchHistory.push(userInput)
           localStorage.setItem("searchHistory",JSON.stringify(searchHistory))
+          pastSearchHistory()
 }
 
+pastSearch.on("click","button")
 $("#userInputBtn").on("click", clickEvent);
+pastSearchHistory()
