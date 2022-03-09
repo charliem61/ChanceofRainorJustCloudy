@@ -2,8 +2,8 @@ var weatherApiKey = "5eab078dd93d8edbe65b584312d7580a";
 var searchHistory = JSON.parse(localStorage.getItem("searchHistory"))||[]
 var userSearchEl = $("#userInput");
 var pastSearch = $("#pastSearch");
-var currentForecast = $("currentForcast");
-var fiveDay = $("fiveDay");
+var currentForecast = $("#currentForecast");
+var fiveDay = $("#fiveDay");
 
 function clickEvent() {
   if($(this).attr("id")==="userInputBtn"){
@@ -32,8 +32,10 @@ function weatherSearch(lat,lon){
           .then(function(response){
                     return response.json()
           }).then(function(data){
-                  
+                  renderCurrentForecast(data.current)
                   console.log(data)
+                  renderFiveDayForecast(data.daily)
+
           })
 }
 function pastSearchHistory(){
@@ -49,16 +51,43 @@ function save(userInput){
           localStorage.setItem("searchHistory",JSON.stringify(searchHistory))
           pastSearchHistory()
 }
-function renderCurrentForcast(){
+function renderCurrentForecast(todaysForecast){
   var card=`<div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
+  <img src="http://openweathermap.org/img/wn/${todaysForecast.weather[0].icon}@2x.png" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
+    <h5 class="card-title">Todays Forecast</h5>
+    <p class="card-text">Tempature: ${todaysForecast.temp}</p>
+    <p class="card-text">Wind Speed: ${todaysForecast.wind_speed}</p>
+    <p class="card-text">Humidity: ${todaysForecast.humidity}</p>
+    <p class="card-text">UV Index: ${todaysForecast.uvi}</p>
+    </div>
 </div>`
+currentForecast.empty()
+currentForecast.append(card)
 }
+function renderFiveDayForecast(fiveDayForecast){
+  fiveDay.empty()
+
+  for(var i=0; i<5; i++){
+
+  var card=`<div class="col-2 card" style="width: 18rem;">
+  <img src="http://openweathermap.org/img/wn/${fiveDayForecast[i].weather[0].icon}@2x.png" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Daily Forecast</h5>
+    <p class="card-text">Tempature: ${fiveDayForecast[i].temp.day}</p>
+    <p class="card-text">Wind Speed: ${fiveDayForecast[i].wind_speed}</p>
+    <p class="card-text">Humidity: ${fiveDayForecast[i].humidity}</p>
+    <p class="card-text">UV Index: ${fiveDayForecast[i].uvi}</p>
+    </div>
+</div>`
+fiveDay.append(card)
+  }
+}
+
+
+
+
+
 
 pastSearch.on("click","button",clickEvent)
 $("#userInputBtn").on("click", clickEvent);
