@@ -73,7 +73,7 @@ function renderFiveDayForecast(fiveDayForecast){
   var card=`<div class="col-2 card" style="width: 18rem;">
   <img src="http://openweathermap.org/img/wn/${fiveDayForecast[i].weather[0].icon}@2x.png" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title">Daily Forecast</h5>
+    <h5 class="card-title">5 Day Forecast</h5>
     <p class="card-text">Tempature: ${fiveDayForecast[i].temp.day}</p>
     <p class="card-text">Wind Speed: ${fiveDayForecast[i].wind_speed}</p>
     <p class="card-text">Humidity: ${fiveDayForecast[i].humidity}</p>
@@ -84,15 +84,7 @@ fiveDay.append(card)
   }
 }
 
-
-
-
-
-
 pastSearch.on("click","button",clickEvent)
 $("#userInputBtn").on("click", clickEvent);
 pastSearchHistory()
-
-// Render current forcast using card template above on line fifty-sixty
-// use same card template for 5day
 
